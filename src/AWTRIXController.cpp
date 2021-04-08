@@ -135,10 +135,6 @@ LightDependentResistor photocell(LDR_PIN, ldrState, LDR_PHOTOCELL);
 #define I2C_SDA D3
 #define I2C_SCL D1
 
-#ifndef ICACHE_RAM_ATTR
-#define ICACHE_RAM_ATTR IRAM_ATTR
-#endif
-
 bool updating = false;
 
 // Audio
@@ -1253,70 +1249,70 @@ void setup()
 	switch (matrixTempCorrection)
 	{
 	case 0:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setCorrection(TypicalLEDStrip);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setCorrection(TypicalLEDStrip);
 		break;
 	case 1:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(Candle);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(Candle);
 		break;
 	case 2:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(Tungsten40W);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(Tungsten40W);
 		break;
 	case 3:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(Tungsten100W);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(Tungsten100W);
 		break;
 	case 4:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(Halogen);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(Halogen);
 		break;
 	case 5:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(CarbonArc);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(CarbonArc);
 		break;
 	case 6:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(HighNoonSun);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(HighNoonSun);
 		break;
 	case 7:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(DirectSunlight);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(DirectSunlight);
 		break;
 	case 8:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(OvercastSky);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(OvercastSky);
 		break;
 	case 9:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(ClearBlueSky);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(ClearBlueSky);
 		break;
 	case 10:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(WarmFluorescent);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(WarmFluorescent);
 		break;
 	case 11:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(StandardFluorescent);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(StandardFluorescent);
 		break;
 	case 12:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(CoolWhiteFluorescent);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(CoolWhiteFluorescent);
 		break;
 	case 13:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(FullSpectrumFluorescent);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(FullSpectrumFluorescent);
 		break;
 	case 14:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(GrowLightFluorescent);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(GrowLightFluorescent);
 		break;
 	case 15:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(BlackLightFluorescent);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(BlackLightFluorescent);
 		break;
 	case 16:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(MercuryVapor);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(MercuryVapor);
 		break;
 	case 17:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(SodiumVapor);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(SodiumVapor);
 		break;
 	case 18:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(MetalHalide);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(MetalHalide);
 		break;
 	case 19:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(HighPressureSodium);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(HighPressureSodium);
 		break;
 	case 20:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setTemperature(UncorrectedTemperature);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setTemperature(UncorrectedTemperature);
 		break;
 	default:
-		FastLED.addLeds<NEOPIXEL, D2>(leds, 256).setCorrection(TypicalLEDStrip);
+		FastLED.addLeds<APA102, D2, D6, BGR>(leds, 256).setCorrection(TypicalLEDStrip);
 		break;
 	}
 
