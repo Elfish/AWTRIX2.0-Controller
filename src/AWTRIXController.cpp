@@ -16,7 +16,6 @@
 #include <Fonts/TomThumb.h>
 #include <LightDependentResistor.h>
 #include <Wire.h>
-#include <SparkFun_APDS9960.h>
 #include "SoftwareSerial.h"
 
 #include <WiFiManager.h>
@@ -132,12 +131,9 @@ bool shouldSaveConfig = false;
 #define LDR_PHOTOCELL LightDependentResistor::GL5516
 LightDependentResistor photocell(LDR_PIN, ldrState, LDR_PHOTOCELL);
 
-// Gesture Sensor
-#define APDS9960_INT D6
+// I2C Settings
 #define I2C_SDA D3
 #define I2C_SCL D1
-SparkFun_APDS9960 apds = SparkFun_APDS9960();
-volatile bool isr_flag = 0;
 
 #ifndef ICACHE_RAM_ATTR
 #define ICACHE_RAM_ATTR IRAM_ATTR
@@ -1132,49 +1128,6 @@ void reconnect()
 	}
 }
 
-void ICACHE_RAM_ATTR interruptRoutine()
-{
-	isr_flag = 1;
-}
-
-void handleGesture()
-{
-	String control;
-	if (apds.isGestureAvailable())
-	{
-		switch (apds.readGesture())
-		{
-		case DIR_UP:
-			control = "UP";
-			break;
-		case DIR_DOWN:
-			control = "DOWN";
-			break;
-		case DIR_LEFT:
-			control = "LEFT";
-			break;
-		case DIR_RIGHT:
-			control = "RIGHT";
-			break;
-		case DIR_NEAR:
-			control = "NEAR";
-			break;
-		case DIR_FAR:
-			control = "FAR";
-			break;
-		default:
-			control = "NONE";
-		}
-		StaticJsonBuffer<200> jsonBuffer;
-		JsonObject &root = jsonBuffer.createObject();
-		root["type"] = "gesture";
-		root["gesture"] = control;
-		String JS;
-		root.printTo(JS);
-		sendToServer(JS);
-	}
-}
-
 uint32_t Wheel(byte WheelPos, int pos)
 {
 	if (WheelPos < 85)
@@ -1552,14 +1505,6 @@ void setup()
 		hardwareAnimatedCheck(MsgType_Audio, 29, 2);
 	}
 
-	attachInterrupt(APDS9960_INT, interruptRoutine, FALLING);
-	apds.enableGestureSensor(true);
-	if (apds.init())
-	{
-		hardwareAnimatedCheck(MsgType_Gest, 29, 2);
-		pinMode(APDS9960_INT, INPUT);
-	}
-
 	photocell.setPhotocellPositionOnGround(false);
 	if (photocell.getCurrentLux() > 1)
 	{
@@ -1715,14 +1660,6 @@ void loop()
 			{
 				client.loop();
 			}
-		}
-		//check gesture sensor
-		if (isr_flag == 1)
-		{
-			detachInterrupt(APDS9960_INT);
-			handleGesture();
-			isr_flag = 0;
-			attachInterrupt(APDS9960_INT, interruptRoutine, FALLING);
 		}
 
 		if (millis() - connectionTimout > 20000)
